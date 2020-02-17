@@ -1,4 +1,4 @@
-import todos from '../models/todosDB'
+import todos from '../models/todosDB';
 import QueryController from '../helpers/db';
 
 /**
@@ -7,7 +7,6 @@ import QueryController from '../helpers/db';
  *  @export todoController
  */
 class todoController {
-
   /**
    * @param {object} request
    * @param {object} response
@@ -18,10 +17,12 @@ class todoController {
     const { title, status, isCompleted } = request.body;
     const todo = {
       id: todos.length + 1,
-      title, status, isCompleted,
-    }
+      title,
+      status,
+      isCompleted,
+    };
     todos.push(todo);
-    return QueryController.getSuccess(response, 201, 'todo created successfully', todo)
+    return QueryController.getSuccess(response, 201, 'todo created successfully', todo);
   }
 
   /**
@@ -43,11 +44,11 @@ class todoController {
     // get a single todo
     const id = parseInt(request.params.id, 10);
     let index;
-    todos.map((x, i) => { if (id === x.id) { index = i } });
+    todos.map((x, i) => { if (id === x.id) { index = i; } });
     if (index >= 0) {
-      return QueryController.getSuccess(response, 200, 'todo retrieved successfully', todos[index])
+      return QueryController.getSuccess(response, 200, 'todo retrieved successfully', todos[index]);
     }
-    return QueryController.notFoundError(response, 200, 'todo not found')
+    return QueryController.notFoundError(response, 200, 'todo not found');
   }
 
   /**
@@ -58,10 +59,10 @@ class todoController {
   static edit(request, response) {
     // edit existing todo
     const id = parseInt(request.params.id, 10);
-    let todo = {};
+    const todo = {};
     let index;
     const { title, status, isCompleted } = request.body;
-    todos.map((x, i) => { if (id === x.id) { index = i } });
+    todos.map((x, i) => { if (id === x.id) { index = i; } });
     if (index >= 0) {
       todo.id = todos[index].id;
       todo.title = title || todos[index].title;
@@ -71,7 +72,7 @@ class todoController {
       todos.splice(index, 1, todo);
       return QueryController.getSuccess(response, 200, 'todo updated successfully');
     }
-    return QueryController.notFoundError(response, 200, 'todo not found')
+    return QueryController.notFoundError(response, 200, 'todo not found');
   }
 
   /**
@@ -83,12 +84,12 @@ class todoController {
     // del from existing todo
     const id = parseInt(request.params.id, 10);
     let index;
-    todos.map((x, i) => { if (id === x.id) { index = i } });
+    todos.map((x, i) => { if (id === x.id) { index = i; } });
     if (index >= 0) {
       todos.splice(index, 1);
       return QueryController.getSuccess(response, 200, 'todo removed successfully');
     }
-    return QueryController.notFoundError(response, 200, 'todo not found')
+    return QueryController.notFoundError(response, 200, 'todo not found');
   }
 }
 

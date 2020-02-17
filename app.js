@@ -1,7 +1,7 @@
 import express from 'express';
-import todoRoute from './src/routes/todoRoute';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
+import todoRoute from './src/routes/todoRoute';
 
 dotenv.config();
 const app = express();
@@ -18,9 +18,11 @@ app.all('*', (req, res) => {
   res.status(400).json({
     status: 404,
     error: 'the url you are trying to access does not exist',
-  })
-})
+  });
+});
 
 app.listen(port, () => {
   console.log(`todo app now running on ${port}`);
 });
+
+export default app;
